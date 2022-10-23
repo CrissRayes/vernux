@@ -5,7 +5,7 @@
   $phone    = $_POST['phone'];
   $comments = $_POST['comments'];
  
-  $para = 'cristian.ramirez.cl@gmail.com';  
+  $para = 'pvergara.vernux@gmail.com';  
   $titulo = 'Contacto desde sitio web';
 
   $mensaje = "Nombre: $name <br>";
