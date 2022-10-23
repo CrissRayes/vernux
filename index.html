@@ -22,6 +22,18 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
+
+    <script src="https://www.google.com/recaptcha/api.js?render=6Lesn6QiAAAAAP4MMnJRieqSReNpE7m7KEFrLEGx"></script>
+    <script>
+        function onClick(e) {
+            e.preventDefault();
+            grecaptcha.ready(function () {
+                grecaptcha.execute('reCAPTCHA_site_key', { action: 'submit' }).then(function (token) {
+                    // Add your logic to submit to your backend server here.
+                });
+            });
+        }
+    </script>
 </head>
 
 <body id="page-top">
@@ -204,7 +216,7 @@
             </div>
             <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
                 <div class="col-lg-6">
-                    <div class="message"></div>
+                    <div id="message"></div>
                     <form method="post" action="php/contact.php" name="contact-form" id="contact-form">
                         <!-- Name input-->
                         <div class="form-floating mb-3">
