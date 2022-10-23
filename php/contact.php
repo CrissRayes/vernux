@@ -1,33 +1,52 @@
 <?php
-if(!$_POST) exit;
-  // Email verificacion
-  function isEmail($email) {
-  	return(preg_match("/^[-_.[:alnum:]]+@((([[:alnum:]]|[[:alnum:]][[:alnum:]-]*[[:alnum:]])\.)+(ad|ae|aero|af|ag|ai|al|am|an|ao|aq|ar|arpa|as|at|au|aw|az|ba|bb|bd|be|bf|bg|bh|bi|biz|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|com|coop|cr|cs|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|edu|ee|eg|eh|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gh|gi|gl|gm|gn|gov|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|in|info|int|io|iq|ir|is|it|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|mg|mh|mil|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|museum|mv|mw|mx|my|mz|na|name|nc|ne|net|nf|ng|ni|nl|no|np|nr|nt|nu|nz|om|org|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|pro|ps|pt|pw|py|qa|re|ro|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tf|tg|th|tj|tk|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|um|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw)$|(([0-9][0-9]?|[0-1][0-9][0-9]|[2][0-4][0-9]|[2][5][0-5])\.){3}([0-9][0-9]?|[0-1][0-9][0-9]|[2][0-4][0-9]|[2][5][0-5]))$/i",$email));
+
+  $name     = $_POST['name'];
+  $email    = $_POST['email'];
+  $phone    = $_POST['phone'];
+  $comments = $_POST['comments'];
+ 
+  $para = 'cristian.ramirez.cl@gmail.com';  
+  $titulo = 'Contacto desde sitio web';
+
+  $mensaje = "Nombre: $name <br>";
+  $mensaje .= "Email: $email <br>";
+  $mensaje .= "Fono: $phone <br>";
+  $mensaje .= "Mensaje: ";
+  $mensaje .= '<p>'.$comments.'</p>';
+
+  $cabecera = 'De:'.$name.'<'.$email.'>' . "\r\n";
+  $cabecera .= 'X-Mailer: PHP/' .phpversion();
+  $cabecera .= 'MIME-Version: 1.0' . "\r\n";
+  $cabecera .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+  // $cabecera .= "X-Mailer: PHP7\n";
+
+  $exito = mail($para, $titulo, $mensaje, $cabecera);
+  // or die("Error!");
+  if($exito) {
+    echo '
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Comercializadora Vernux SpA</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Google fonts-->
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic"
+  rel="stylesheet" type="text/css" />
+  <link href="css/styles.css" rel="stylesheet" />
+  </head>
+  <body id="page-top">
+  <div class="container">
+  <h1>Hemos recibido tu consulta y te contactaremos a la brevedad!</h1>
+  <p class="back">Regresar a <a href="../index.html">www.vernux.cl</a></p>
+  </div>
+  </body>
+  </html>
+  ';
 }
-
-$name     = $_POST['name'];
-$email    = $_POST['email'];
-$phone    = $_POST['phone'];
-$comments = $_POST['comments'];
-
-$header = "From: ".$email."\r\n";
-$header .= "X-Mailer: PHP/" . phpversion() . "\r\n";
-$header .= 'MIME-Version: 1.0' . "\r\n";
-$header .= 'Content-type: text/html; charset=utf-8' . "\r\n";
-
-$cuerpo = "Nombre: ".$name."<br>";
-$cuerpo .= "Email: ".$email."<br>";
-$cuerpo .= "Fono: ".$phone."<br>";
-$cuerpo .= "Mensaje: ".$comments."<br>";
-
-$para = "cristian.ramirez.cl@gmail.com";
-$asunto = "Contacto Desde Sitio Web";
-
-$mail_destino = @mail($para, $asunto, $cuerpo, $header);
-
-if($mail_destino) {
-  // Email enviado, echo página de éxito
-  echo  "<h4>¡Genial <strong>$name</strong>!, Le contactaremos a la brevedad.</h4>";
-  } else {
-  echo  "<h4>Error, favor reintente.</h4>";
-}
+?>

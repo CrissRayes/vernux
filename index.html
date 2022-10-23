@@ -22,16 +22,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
-
-    <script src="https://www.google.com/recaptcha/api.js?render=6Lesn6QiAAAAAP4MMnJRieqSReNpE7m7KEFrLEGx"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
     <script>
-        function onClick(e) {
-            e.preventDefault();
-            grecaptcha.ready(function () {
-                grecaptcha.execute('reCAPTCHA_site_key', { action: 'submit' }).then(function (token) {
-                    // Add your logic to submit to your backend server here.
-                });
-            });
+        function onSubmit(token) {
+            document.getElementById("contact-form").submit();
         }
     </script>
 </head>
@@ -216,7 +210,6 @@
             </div>
             <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
                 <div class="col-lg-6">
-                    <div id="message"></div>
                     <form method="post" action="php/contact.php" name="contact-form" id="contact-form">
                         <!-- Name input-->
                         <div class="form-floating mb-3">
@@ -245,21 +238,13 @@
                                 mensaje.
                             </div>
                         </div>
-                        <!-- Submit success message-->
-                        <div class="d-none" id="submitSuccessMessage">
-                            <div class="text-center mb-3">
-                                <div class="fw-bolder">Hemos recibido su mensaje! Nos pondremos en contacto a la
-                                    brevedad.</div>
-                            </div>
-                        </div>
-                        <!-- Submit error message-->
-                        <div class="d-none" id="submitErrorMessage">
-                            <div class="text-center text-danger mb-3">Ups! Parece que algo salió mal. Favor intente
-                                nuevamente.</div>
-                        </div>
                         <!-- Submit Button-->
-                        <div class="d-grid"><button class="btn btn-primary btn-xl" id="submit" name="send"
-                                type="submit">Enviar</button></div>
+                        <div class="d-grid">
+                            <!-- <button class="btn btn-primary btn-xl" id="submit" name="send" type="submit">Enviar</button> -->
+                            <button class="g-recaptcha btn btn-primary btn-xl"
+                                data-sitekey="6Lesn6QiAAAAAP4MMnJRieqSReNpE7m7KEFrLEGx" data-callback='onSubmit'
+                                data-action='submit'>Enviar</button>
+                        </div>
                     </form>
                 </div>
             </div>
